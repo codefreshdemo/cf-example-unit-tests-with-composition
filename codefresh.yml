@@ -24,4 +24,6 @@ steps:
       composition_candidates:
           test:
             image: ${{build_step}}
+            links:
+              - db
             command: bash -c 'sleep 30 && MYSQL_ROOT_PASSWORD=admin MYSQL_USER=my_user MYSQL_HOST=db MYSQL_PASSWORD=admin MYSQL_DATABASE=nodejs npm test'

@@ -1,1 +1,3 @@
 # cf-example-unit-tests-with-composition
+
+[![Codefresh build status]( https://g.codefresh.io/api/badges/build?repoOwner=codefreshdemo&repoName=cf-example-unit-tests-with-composition&branch=master&pipelineName=cf-example-unit-tests-with-composition&accountName=nikolai&type=cf-1)]( https://g.codefresh.io/repositories/codefreshdemo/cf-example-unit-tests-with-composition/builds?filter=trigger:build;branch:master;service:58384c20c31a1b0100d6dfbf~cf-example-unit-tests-with-composition)
