@@ -4,7 +4,9 @@ steps:
       type: build
       image_name: codefreshio/yaml-example-unit-test-compose
       dockerfile: Dockerfile
-      tag: ${{CF_BRANCH}}
+      tag:
+        - ${{CF_BRANCH}}
+        - master
 
     unit_test:
       type: composition
