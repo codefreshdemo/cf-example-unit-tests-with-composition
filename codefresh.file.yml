@@ -11,11 +11,6 @@ steps:
       working_directory: ${{main_clone}}
       composition: ./docker-compose.yml
       composition_candidates:
-          test:
-            image: ${{build_step}}
-            links:
-              - db
-            command: bash -c 'sleep 30 && MYSQL_ROOT_PASSWORD=admin MYSQL_USER=my_user MYSQL_HOST=db MYSQL_PASSWORD=admin MYSQL_DATABASE=nodejs npm test'
-      composition_variables:
-        - MYSQL_PASSWORD=${{MYSQL_PASSWORD}}
-        - MYSQL_DATABASE=${{MYSQL_DATABASE}}
+        test:
+          image: ${{build_step}}
+          command: bash -c 'sleep 30 && MYSQL_ROOT_PASSWORD=admin MYSQL_USER=my_user MYSQL_HOST=db MYSQL_PASSWORD=admin MYSQL_DATABASE=nodejs npm test'
