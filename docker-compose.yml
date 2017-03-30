@@ -7,8 +7,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=admin
       - MYSQL_USER=my_user
-      - MYSQL_PASSWORD=${{MYSQL_PASSWORD}}
-      - MYSQL_DATABASE=${{MYSQL_DATABASE}}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
   test:
     build:
       context: ./
