@@ -1,5 +1,6 @@
 version: '1.0'
 steps:
+
     build_step:
       type: build
       image_name: codefreshio/yaml-example-unit-test-compose
