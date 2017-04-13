@@ -1,5 +1,6 @@
 FROM node:6.9.1
 
+RUN apt-get update
 RUN apt-get install -y netcat
 RUN apt-get install -y dnsutils
 
