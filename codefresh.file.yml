@@ -10,7 +10,7 @@ steps:
         condition:
           any:
             all:
-              noSkipInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-ci") == false || includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-deploy") == false'
+              noSkipInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-ci") == false'
 
     unit_test:
       type: composition
