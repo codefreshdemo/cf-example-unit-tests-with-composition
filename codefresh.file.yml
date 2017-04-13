@@ -8,8 +8,9 @@ steps:
       tag: ${{CF_BRANCH}}
       when:
         condition:
-          all:
-            noSkipInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-ci") == false'
+          any:
+            noSkipCiInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "skip ci") == false'
+            notFeatureBranch: 'match("${{CF_BRANCH}}", "^FB-", true) == false'
 
     unit_test:
       type: composition
