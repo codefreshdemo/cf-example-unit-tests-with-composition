@@ -5,6 +5,11 @@ steps:
       image_name: codefreshio/yaml-example-unit-test-compose
       dockerfile: Dockerfile
       tag: ${{CF_BRANCH}}
+      when:
+        condition:
+          any:
+            all:
+              noSkipInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-ci") == false || includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-deploy") == false'
 
     unit_test:
       type: composition

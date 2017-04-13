@@ -1,8 +1,5 @@
 FROM node:6.9.1
 
-RUN apt-get install -y netcat
-RUN apt-get install -y dnsutils
-
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
