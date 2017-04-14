@@ -1,7 +1,6 @@
 version: '1.0'
 steps:
 
-
     build_step:
       type: build
       image_name: codefreshio/yaml-example-unit-test-compose
@@ -9,9 +8,12 @@ steps:
       tag: ${{CF_BRANCH}}
       when:
         condition:
-          any:
-            noSkipCiInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "skip ci") == false'
-            notFeatureBranch: 'match("${{CF_BRANCH}}", "^FB-", true) == false'
+          cond1:
+              noSkipCiInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-ci") == false'
+              notMasterBranch: '"${{CF_BRANCH}}" != "master"'
+          cond2:
+              noSkipDeployInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-deploy") == false'
+              masterBranch: '"${{CF_BRANCH}}" == "test"
 
     unit_test:
       type: composition
