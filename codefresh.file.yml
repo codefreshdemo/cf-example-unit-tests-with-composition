@@ -11,9 +11,9 @@ steps:
           all:
               noSkipCiInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-ci") == false'
               notMasterBranch: '"${{CF_BRANCH}}" != "master"'
-          any:
-              noSkipDeployInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-deploy") == false'
-              masterBranch: '"${{CF_BRANCH}}" == "test"'
+#          any:
+#              noSkipDeployInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-deploy") == false'
+#              masterBranch: '"${{CF_BRANCH}}" == "test"'
 
     unit_test:
       type: composition
