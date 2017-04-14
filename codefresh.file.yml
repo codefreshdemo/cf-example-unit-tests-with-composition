@@ -13,7 +13,7 @@ steps:
               notMasterBranch: '"${{CF_BRANCH}}" != "master"'
           any:
               noSkipDeployInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-deploy") == false'
-              masterBranch: '"${{CF_BRANCH}}" == "test12"'
+              masterBranch: '"${{CF_BRANCH}}" == "test"'
 
     unit_test:
       type: composition
