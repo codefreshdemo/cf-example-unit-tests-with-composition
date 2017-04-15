@@ -9,7 +9,18 @@ steps:
   unit_test:
     type: composition
     working_directory: ${{main_clone}}
-    composition: ./docker-compose.yml
+    composition:
+      version: '2'
+      services:
+        db:
+          image: mysql:latest
+          ports:
+            - 3306
+          environment:
+            - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+            - MYSQL_USER=$MYSQL_USER
+            - MYSQL_PASSWORD=$MYSQL_PASSWORD
+            - MYSQL_DATABASE=$MYSQL_DATABASE
     composition_candidates:
       test:
         image: ${{build_step}}
