@@ -14,3 +14,4 @@ RUN npm install
 RUN npm install -g gulp
 
 COPY . /usr/src/app
+RUN chmod +x /usr/src/app/test-script.sh

@@ -5,14 +5,19 @@ services:
     ports:
       - 3306
     environment:
-      - MYSQL_ROOT_PASSWORD=admin
-      - MYSQL_USER=my_user
-      - MYSQL_PASSWORD=admin
-      - MYSQL_DATABASE=nodejs
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
   test:
     build:
       context: ./
       dockerfile: Dockerfile
     links:
       - db
-    command: bash -c 'sleep 30 && MYSQL_ROOT_PASSWORD=admin MYSQL_USER=my_user MYSQL_HOST=db MYSQL_PASSWORD=admin MYSQL_DATABASE=nodejs npm test'
+    command: bash -c '/usr/src/app/test-script.sh'
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
