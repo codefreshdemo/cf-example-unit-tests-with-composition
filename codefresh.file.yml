@@ -16,6 +16,11 @@ steps:
         links:
           - db
         command: bash -c '/usr/src/app/test-script.sh'
+        environment:
+          - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+          - MYSQL_USER=$MYSQL_USER
+          - MYSQL_PASSWORD=$MYSQL_PASSWORD
+          - MYSQL_DATABASE=$MYSQL_DATABASE
     composition_variables:
       - MYSQL_ROOT_PASSWORD=admin
       - MYSQL_USER=my_user
