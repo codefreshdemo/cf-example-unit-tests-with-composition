@@ -18,27 +18,28 @@ To compile and test our code we use Codefresh's [Freestyle step](https://docs.co
 The Freestyle step basically let's you say "Hey, Codefresh! Here's a Docker image. Create a new container and run these commands for me, will ya?"
 
 ```yml
-unit_test:
-      type: composition
-      working_directory: ${{main_clone}}
-      composition:
-          version: '2'
-          services:
-            db:
-              image: mysql:latest
-              ports:
-                - 3306
-              environment:
-                MYSQL_ROOT_PASSWORD: admin
-                MYSQL_USER: my_user
-                MYSQL_PASSWORD: admin
-                MYSQL_DATABASE: nodejs
-      composition_candidates:
-          test:
-            image: ${{build_step}}
-            links:
-              - db
-            command: bash -c 'sleep 30 && MYSQL_ROOT_PASSWORD=admin MYSQL_USER=my_user MYSQL_HOST=db MYSQL_PASSWORD=admin MYSQL_DATABASE=nodejs npm test'
+  unit_test:
+    type: composition
+    working_directory: ${{main_clone}}
+    composition: ./docker-compose.yml
+    composition_candidates:
+      test:
+        image: ${{build_step}}
+        links:
+          - db
+        command: bash -c '/usr/src/app/test-script.sh'
+        environment:
+          - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+          - MYSQL_USER=$MYSQL_USER
+          - MYSQL_PASSWORD=$MYSQL_PASSWORD
+          - MYSQL_DATABASE=$MYSQL_DATABASE
+          - MYSQL_HOST=$MYSQL_HOST
+    composition_variables:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_USER=my_user
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=nodejs
+      - MYSQL_HOST=db
 ```
 
 The `image` field states which image should be used when creating the container (Similar to Travis CI's `language` or circleci`s `machine`).
@@ -52,11 +53,11 @@ To bake our application into a Docker image we use Codefresh's [Build step](http
 The Build is a simplified abstraction over the Docker build command.
 
 ```yml
-build_step:
-      type: build
-      image_name: codefreshio/yaml-example-unit-test-compose
-      dockerfile: Dockerfile
-      tag: ${{CF_BRANCH}}
+  build_step:
+    type: build
+    image_name: codefreshio/example-nodejs-mysql
+    dockerfile: Dockerfile
+    tag: ${{CF_BRANCH}}
 ```
 
 Use the `image_name` field to declare the name of the resulting image (don't forget to change the image owner name from `codefreshdemo` to your own!).
