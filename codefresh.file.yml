@@ -9,8 +9,10 @@ steps:
       when:
         condition:
           all:
-              noSkipCiInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-ci") == false'
-              notMasterBranch: '"${{CF_BRANCH}}" != "master"'
+              noSkipCiInCommitMessage: |
+                  includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-ci") == false
+              notMasterBranch: |
+                  "${{CF_BRANCH}}" != "master"
 #          any:
 #              noSkipDeployInCommitMessage: 'includes(lower("${{CF_COMMIT_MESSAGE}}"), "--skip-deploy") == false'
 #              masterBranch: '"${{CF_BRANCH}}" == "test"'
