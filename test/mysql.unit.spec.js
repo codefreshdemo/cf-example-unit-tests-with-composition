@@ -25,6 +25,7 @@ describe('mysql test', () => {
         });
     });
 
+
     function timer(timeout) {
         if(timeout < 600){
             setTimeout(function () {
