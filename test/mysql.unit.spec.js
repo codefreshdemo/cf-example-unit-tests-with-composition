@@ -25,8 +25,18 @@ describe('mysql test', () => {
         });
     });
 
-    it('insert new item to mysql table', () => {
+    function timer(timeout) {
+        if(timeout < 600){
+            setTimeout(function () {
+                timeout++;
+                console.log("Testing " + timeout);
+                timer(timeout);
+            }, 1000);
+        }
+    }
 
+    it('insert new item to mysql table', () => {
+        timer(0);
     });
 
     it('select all items', () => {
