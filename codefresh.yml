@@ -17,7 +17,7 @@ steps:
             ports:
               - 3306
             volumes:
-              - ./data:/var/lib/mysql
+              - ./all-databases.sql:/var/lib/mysql
             environment:
               - MYSQL_ROOT_PASSWORD=admin
               - MYSQL_USER=test
