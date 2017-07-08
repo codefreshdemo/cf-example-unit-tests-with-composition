@@ -11,5 +11,4 @@ wait_for_db() {
 wait_for_db
 
 cd /usr/src/app
-npm install
 npm test

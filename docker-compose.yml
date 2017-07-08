@@ -4,11 +4,13 @@ services:
     image: mysql:latest
     ports:
       - 3306
+    volumes:
+      - ./data:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-      - MYSQL_USER=$MYSQL_USER
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
-      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=my_db
   test:
     build:
       context: ./
@@ -17,8 +19,8 @@ services:
       - db
     command: bash -c '/usr/src/app/test-script.sh'
     environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-      - MYSQL_USER=$MYSQL_USER
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
-      - MYSQL_DATABASE=$MYSQL_DATABASE
-      - MYSQL_HOST=$MYSQL_HOST
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=my_db
+      - MYSQL_HOST=db

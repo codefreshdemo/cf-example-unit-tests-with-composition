@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "scripts": {
         "start": "node index.js",
-        "test": "gulp lint && gulp unit_test"
+        "test": "node test/init.js"
     },
     "dependencies": {
         "express": "^4.10.6",
