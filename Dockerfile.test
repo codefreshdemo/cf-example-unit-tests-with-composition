@@ -1,0 +1,5 @@
+FROM microsoft/dotnet:1.1.2-sdk-jessie
+
+ENV DOTNET_CLI_TELEMETRY_OPTOUT 1 ASPNETCORE_URLS http://*:80 MAKE_DIR '/Broadvoice/Graph.API'
+
+ENTRYPOINT dotnet $MAKE_DIR/Broadvoice.Graph.API.dll

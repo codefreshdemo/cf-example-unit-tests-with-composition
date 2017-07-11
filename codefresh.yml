@@ -5,6 +5,7 @@ steps:
     image_name: ncodefresh/test-merge-candidate
     description: Building code...
     working_directory: ${{main_clone}}
+    dockerfile: Dockerfile.test
 
   push_to_local_registry:
     description: Storing successful build locally
