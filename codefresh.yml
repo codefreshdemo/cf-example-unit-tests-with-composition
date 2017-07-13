@@ -39,6 +39,7 @@ steps:
 
       composition_candidates:
         test:
+          container_name: 'test.api1'
           image: ${{build_step}}
           links:
             - db
