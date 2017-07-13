@@ -11,10 +11,10 @@ var connection = mysql.createConnection({
 });
 
 var dbName = process.env.MYSQL_DATABASE;
+console.log('STORAGE_CONNECTION_STRING=' + process.env.STORAGE_CONNECTION_STRING);
 
 connection.connect(function(err) {
     if (err) throw err;
-    console.log('STORAGE_CONNECTION_STRING=' + process.env.STORAGE_CONNECTION_STRING);
 
     console.log("Connected!");
     connection.query("CREATE DATABASE IF NOT EXISTS " + dbName, function (err, result) {
