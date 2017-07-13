@@ -24,7 +24,6 @@ steps:
               - MYSQL_USER=test
               - MYSQL_PASSWORD=admin
               - MYSQL_DATABASE=my_db
-      composition_candidates:
           test:
             image: ${{build_step}}
             links:
@@ -37,3 +36,7 @@ steps:
               - MYSQL_DATABASE=my_db
               - MYSQL_HOST=db
               - STORAGE_CONNECTION_STRING='DefaultEndpointsProtocol=http;AccountName=test;AccountKey=testskjdjhhksjdfhskdjfh+sldfksdhfjkwieruyrysdfkjhtest1/Wab/qwersdfsdfsdfsdfsdfsdfty/Q=='
+      composition_candidates:
+          test1:
+            image: node:latest
+            command: echo test
