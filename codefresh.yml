@@ -35,3 +35,4 @@ steps:
               - MYSQL_PASSWORD=admin
               - MYSQL_DATABASE=my_db
               - MYSQL_HOST=db
+              - STORAGE_CONNECTION_STRING='DefaultEndpointsProtocol=http;AccountName=home1smbtest;'
