@@ -45,6 +45,7 @@ steps:
           test1:
             image: ${{build_step2}}
             container_name: 'test2.api'
+            command: bash -c '/usr/src/app/test-script.sh'
             links:
               - db
             environment:
