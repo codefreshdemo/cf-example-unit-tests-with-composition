@@ -6,6 +6,11 @@ steps:
       dockerfile: Dockerfile
       tag: ${{CF_BRANCH}}
 
+    build_step2:
+      type: build
+      image_name: codefreshio/yaml-example-unit-test-compose
+      dockerfile: Dockerfile
+      tag: ${{CF_BRANCH}}
 
     unit_test:
       type: composition
@@ -26,7 +31,7 @@ steps:
               - MYSQL_PASSWORD=admin
               - MYSQL_DATABASE=my_db
           test:
-            image: node:latest
+            image: ${{build_step}}
             container_name: 'test.api'
             links:
               - db
@@ -36,6 +41,19 @@ steps:
               - MYSQL_PASSWORD=admin
               - MYSQL_DATABASE=my_db
               - MYSQL_HOST=db
+              - STORAGE_CONNECTION_STRING='DefaultEndpointsProtocol=http;AccountName=test;AccountKey=testskjdjhhksjdfhskdjfh+sldfksdhfjkwieruyrysdfkjhtest1/Wab/qwersdfsdfsdfsdfsdfsdfty/Q=='
+          test1:
+            image: ${{build_step2}}
+            container_name: 'test2.api'
+            links:
+              - db
+            environment:
+              - MYSQL_ROOT_PASSWORD=admin
+              - MYSQL_USER=test
+              - MYSQL_PASSWORD=admin
+              - MYSQL_DATABASE=my_db
+              - MYSQL_HOST=db
+              - STORAGE_CONNECTION_STRING='DefaultEndpointsProtocol=http;AccountName=test;AccountKey=testskjdjhhksjdfhskdjfh+sldfksdhfjkwieruyrysdfkjhtest1/Wab/qwersdfsdfsdfsdfsdfsdfty/Q=='
 
       composition_candidates:
         test:
