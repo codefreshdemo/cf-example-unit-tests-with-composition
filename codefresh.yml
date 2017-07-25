@@ -18,54 +18,54 @@ steps:
       composition:
         version: '2'
         services:
-          db_postgres:
-            image: postgres:latest
-            hostname: db
-            ports:
-              - "5432:5432"
-            environment:
-              - POSTGRES_DB=hydros
-              - POSTGRES_USER=postgres
-              - POSTGRES_PASSWORD=ad40cf7c-f4c0-11e6-b499-0c4de99b40ba
-            volumes:
-              - /data:/var/lib/postgresql
-            restart: always
-          rabbit:
-            hostname: rabbit
-            image: 'rabbitmq:3.6.0-management'
-            environment:
-              - RABBITMQ_DEFAULT_USER=guest
-              - RABBITMQ_DEFAULT_PASS=guest
-            expose:
-              - '5672'
-              - '15672'
-            ports:
-              - '5672:5672'
-              - '15672:15672'
+#          db_postgres:
+#            image: postgres:latest
+#            hostname: db
+#            ports:
+#              - "5432:5432"
+#            environment:
+#              - POSTGRES_DB=hydros
+#              - POSTGRES_USER=postgres
+#              - POSTGRES_PASSWORD=ad40cf7c-f4c0-11e6-b499-0c4de99b40ba
+#            volumes:
+#              - /data:/var/lib/postgresql
+#            restart: always
+#          rabbit:
+#            hostname: rabbit
+#            image: 'rabbitmq:3.6.0-management'
+#            environment:
+#              - RABBITMQ_DEFAULT_USER=guest
+#              - RABBITMQ_DEFAULT_PASS=guest
+#            expose:
+#              - '5672'
+#              - '15672'
+#            ports:
+#              - '5672:5672'
+#              - '15672:15672'
           db:
             image: mysql:latest
             container_name: db
             ports:
               - 3306
             volumes:
-              - ./data:/var/lib/mysql
+              - ${{CF_VOLUME_PATH}}:/var/lib/mysql
             environment:
               - MYSQL_ROOT_PASSWORD=admin
               - MYSQL_USER=test
               - MYSQL_PASSWORD=admin
               - MYSQL_DATABASE=my_db
-          test:
-            image: ${{build_step}}
-            container_name: 'test.api'
-            links:
-              - db
-            environment:
-              - MYSQL_ROOT_PASSWORD=admin
-              - MYSQL_USER=test
-              - MYSQL_PASSWORD=admin
-              - MYSQL_DATABASE=my_db
-              - MYSQL_HOST=db
-              - STORAGE_CONNECTION_STRING='DefaultEndpointsProtocol=http;AccountName=test;AccountKey=testskjdjhhksjdfhskdjfh+sldfksdhfjkwieruyrysdfkjhtest1/Wab/qwersdfsdfsdfsdfsdfsdfty/Q=='
+#          test:
+#            image: ${{build_step}}
+#            container_name: 'test.api'
+#            links:
+#              - db
+#            environment:
+#              - MYSQL_ROOT_PASSWORD=admin
+#              - MYSQL_USER=test
+#              - MYSQL_PASSWORD=admin
+#              - MYSQL_DATABASE=my_db
+#              - MYSQL_HOST=db
+#              - STORAGE_CONNECTION_STRING='DefaultEndpointsProtocol=http;AccountName=test;AccountKey=testskjdjhhksjdfhskdjfh+sldfksdhfjkwieruyrysdfkjhtest1/Wab/qwersdfsdfsdfsdfsdfsdfty/Q=='
       composition_candidates:
         test:
           container_name: 'test.api1'
