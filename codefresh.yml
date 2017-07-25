@@ -54,6 +54,9 @@ steps:
               - MYSQL_USER=test
               - MYSQL_PASSWORD=admin
               - MYSQL_DATABASE=my_db
+        volumes:
+          ${{CF_VOLUME_PATH}}:
+            external: true
 #          test:
 #            image: ${{build_step}}
 #            container_name: 'test.api'
