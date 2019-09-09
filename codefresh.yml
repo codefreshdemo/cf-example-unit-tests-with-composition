@@ -1,29 +1,49 @@
-version: '1.0'
+version: "1.0"
+stages:
+  - prepare
+  - build
+  - test
 steps:
-    build_step:
-      type: build
-      image_name: codefreshio/yaml-example-unit-test-compose
-      dockerfile: Dockerfile
-      tag: ${{CF_BRANCH}}
-
-    unit_test:
-      type: composition
-      working_directory: ${{main_clone}}
+  main_clone:
+    type: "git-clone"
+    description: "Cloning main repository..."
+    repo: "codefreshdemo/cf-example-unit-tests-with-composition"
+    revision: "master"
+    git: github
+    stage: prepare
+  build_test_image:
+    title: "Building Test Docker Image"
+    type: "build"
+    image_name: "mysql-tests"
+    tag: "master"
+    dockerfile: "Dockerfile"
+    stage: build
+  run_integration_tests:
+    title: "Running integration tests"
+    stage: test
+    image: '${{build_test_image}}'
+    environment: &test_mysql_vars
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_USER=my_user
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=nodejs
+      - MYSQL_HOST=test_mysql_db
+    commands:
+      # MySQL is certainly up at this point
+         - cd /usr/src/app
+         - npm test
+    services:
       composition:
-          version: '2'
-          services:
-            db:
-              image: mysql:latest
-              ports:
-                - 3306
-              environment:
-                MYSQL_ROOT_PASSWORD: admin
-                MYSQL_USER: my_user
-                MYSQL_PASSWORD: admin
-                MYSQL_DATABASE: nodejs
-      composition_candidates:
-          test:
-            image: ${{build_step}}
-            links:
-              - db
-            command: bash -c 'sleep 30 && MYSQL_ROOT_PASSWORD=admin MYSQL_USER=my_user MYSQL_HOST=db MYSQL_PASSWORD=admin MYSQL_DATABASE=nodejs npm test'
+        test_mysql_db:
+          image: mysql:5.7
+          ports:
+            - 3306
+          environment: *test_mysql_vars # Same MYSQL_HOST, MYSQL_USER etc.
+      readiness:
+        timeoutSeconds: 30
+        periodSeconds: 15
+        image: '${{build_test_image}}'
+        commands:
+          - "nslookup test_mysql_db"   
+          - "nc -z test_mysql_db 3306"
+
