@@ -1,75 +1,21 @@
-# Welcome
+# MySQL/NodeJS Integration tests example
 
-So, you've decided to try Codefresh? Welcome on board!
+This is an example NodeJs application that uses MySQL as a backend database.
+It is compiled using Codefresh.
 
-Using this repository we'll help you get up to speed with basic functionality such as: *compiling*, *testing* and *building Docker images*.
+## Running the integration tests locally
 
-This project uses `Node Js, MySQL` to build an application which will eventually become a distributable Docker image.
+To compile and package using Docker compose
 
-## Looking around
-
-In the root of this repository you'll find a file named `codefresh.yml`, this is our [build descriptor](https://docs.codefresh.io/docs/what-is-the-codefresh-yaml) and it describes the different steps that comprise our process.
-Let's quickly review the contents of this file:
-
-### Compiling and testing
-
-To compile and test our code we use Codefresh's [Freestyle step](https://docs.codefresh.io/docs/steps#section-freestyle).
-
-The Freestyle step basically let's you say "Hey, Codefresh! Here's a Docker image. Create a new container and run these commands for me, will ya?"
-
-```yml
-  unit_test:
-    type: composition
-    working_directory: ${{main_clone}}
-    composition: ./docker-compose.yml
-    composition_candidates:
-      test:
-        image: ${{build_step}}
-        links:
-          - db
-        command: bash -c '/usr/src/app/test-script.sh'
-        environment:
-          - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-          - MYSQL_USER=$MYSQL_USER
-          - MYSQL_PASSWORD=$MYSQL_PASSWORD
-          - MYSQL_DATABASE=$MYSQL_DATABASE
-          - MYSQL_HOST=$MYSQL_HOST
-    composition_variables:
-      - MYSQL_ROOT_PASSWORD=admin
-      - MYSQL_USER=my_user
-      - MYSQL_PASSWORD=admin
-      - MYSQL_DATABASE=nodejs
-      - MYSQL_HOST=db
+```bash
+docker-compose up
 ```
 
-The `image` field states which image should be used when creating the container (Similar to Travis CI's `language` or circleci`s `machine`).
+This command will also execute the tests automatically.
 
-The `commands` field is how you specify all the commands that you'd like to execute
+## To use this project in Codefresh
 
-### Building
+There is also a [codefresh.yml](codefresh.yml) for easy usage with the [Codefresh](codefresh.io) CI/CD platform.
 
-To bake our application into a Docker image we use Codefresh's [Build step](https://docs.codefresh.io/docs/steps#section-build).
+More details can be found in [Codefresh documentation](https://codefresh.io/docs/docs/yaml-examples/examples/integration-tests-with-mysql/)
 
-The Build is a simplified abstraction over the Docker build command.
-
-```yml
-  build_step:
-    type: build
-    image_name: codefreshio/example-nodejs-mysql
-    dockerfile: Dockerfile
-    tag: ${{CF_BRANCH}}
-```
-
-Use the `image_name` field to declare the name of the resulting image (don't forget to change the image owner name from `codefreshdemo` to your own!).
-
-## Using This Example
-
-To use this example:
-
-* Fork this repository to your own [INSERT_SCM_SYSTEM (git, bitbucket)] account.
-* Log in to Codefresh using your [INSERT_SCM_SYSTEM (git, bitbucket)] account.
-* Click the `Add Service` button.
-* Select the forked repository.
-* Select the `I have a Codefresh.yml file` option.
-* Complete the wizard.
-* Rejoice!
